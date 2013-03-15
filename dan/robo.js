@@ -12,27 +12,33 @@ window.onload = function(){
   unit.execute = function(cmd){
     cmd = cmd.split(" ");
 
-    console.log("received:", cmd);
-
     if (cmd[0] == "move" || cmd[0] == "m") {
-      var speed = cmd[2] || 1;
-      switch (cmd[1]) {
-      case "north":
-      case "n":
-        this.attr({ x: this.x, y: this.y - speed * 10 });
-        break;
-      case "south":
-      case "s":
-        this.attr({ x: this.x, y: this.y + speed * 10 });
-        break;
-      case "east":
-      case "e":
-        this.attr({ x: this.x + speed * 10, y: this.y});
-        break;
-      case "west":
-      case "w":
-        this.attr({ x: this.x - speed * 10, y: this.y });
-        break;
+      var numLeftToMove = _.isUndefined(cmd[2]) ? 1 : parseInt(cmd[2]);
+
+      if (numLeftToMove === 0) {
+        return;
+      } else {
+        switch (cmd[1]) {
+        case "north":
+        case "n":
+          this.y -= 10;
+          break;
+        case "south":
+        case "s":
+          this.y += 10;
+          break;
+        case "east":
+        case "e":
+          this.x += 10;
+          break;
+        case "west":
+        case "w":
+          this.x -= 10;
+          break;
+        }
+
+        this.attr({ x: this.x, y: this.y });
+        unit.execute([cmd[0], cmd[1], numLeftToMove - 1].join(" "));
       }
     }
   }
