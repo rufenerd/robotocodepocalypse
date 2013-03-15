@@ -1,10 +1,11 @@
 window.onload = function(){
   Crafty.init(900, 600);
   Crafty.background('rgb(127,127,127)');
-  TILE_SIZE = 10;
+  TILE_SIZE = 5;
+  TURN_TIME = 1;
 
   //Unit
-  var unit = Crafty.e("2D, Canvas, Color, Multiway")
+  var unit = Crafty.e("2D, Canvas, Color, Multiway, Delay")
 	  .attr({ x: 300, y: 150, w: 10, h: 10})
 	  .color('rgb(0,0,255)')
     .multiway(1, {})
@@ -42,9 +43,10 @@ window.onload = function(){
         distanceToTravel -= 1;
 
         if (distanceToTravel) {
-          this.timeout(function(){
-            unit.execute([cmd[0], cmd[1], distanceToTravel].join(" "));
-          }, 30)
+          console.log(this);
+          this.delay(function(){
+            this.execute([cmd[0], cmd[1], distanceToTravel].join(" "));
+          }, TURN_TIME)
         }
       }
     }
