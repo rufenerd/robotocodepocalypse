@@ -2,22 +2,24 @@
 <html>
   <head>
     <title>Robotocodepocalypse</title>
-    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="/css/styles.css" rel="stylesheet" type="text/css">
   </head>
-  <script src="http://code.jquery.com/jquery.js"></script>
-  <script src="../bootstrap/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="../underscore.js"></script>
-  <script type="text/javascript" src="../crafty.js"></script>
-  <script type="text/javascript" src="robo.js"></script>
   <body>
     <style>
       #cr-stage { border:2px solid black; margin:5px auto; color:white }
       #commander { position:relative; top:700px; left:577px }
     </style>
+    
     <div id="commander" class="input-append">
       <input class="span2" id="command_input" type="text" value="m s 5">
       <button class="btn" id="command_button" type="button">Command!</button>
       <label>(e.g. "move north 5" or "m n 5")</label>
     </div>
+
+    <script src="/js/libs/jquery/jquery.js"></script>
+    <script src="/js/libs/underscore/underscore.js"></script>
+    <script src="/js/libs/bootstrap/bootstrap.js"></script>
+    <script src="/js/libs/crafty/crafty.js"></script>
+    <script src="robo.js"></script>
   </body>
 </html>
