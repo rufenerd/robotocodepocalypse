@@ -9,19 +9,31 @@ define(function(require) {
     TURN_TIME    : 1,
 
     initialize: function() {
+      var self = this;
       this.server = io.connect('http://localhost:3000');
       var server = this.server;
-      
+      this.objects = {};
+
       server.on('connect', function(data) {
-        nickname = prompt("What is your nickname?");
-        server.emit('join', nickname);
+        self.name = prompt("What is your nickname?");
+        server.emit('join', self.name);
       });
 
       server.on('newState', function (newState) {
-        console.log(newState);
+        _.each(newState, function(info, id){
+          if (id !== self.name) {
+            if (_.isUndefined(self.objects[id])) {
+              self.objects[id] = Crafty.e("2D, Canvas, Color, solid")
+                .color('rgb(255,0,255)')
+                .attr({ w: 10, h: 10 })
+            }
+            
+            self.objects[id].attr(info);
+          }
+        });
       });
-
-      Crafty.init(this.CANVAS_WIDTH, this.CANVAS_HEIGHT);
+      
+      Crafty.init(self.CANVAS_WIDTH, self.CANVAS_HEIGHT);
       Crafty.background('rgb(127,127,127)');
 
 

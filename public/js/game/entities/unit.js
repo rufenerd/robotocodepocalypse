@@ -70,7 +70,7 @@ define(function(require) {
           if(unit.hit('solid')){
             unit.attr({x: from.x, y:from.y});
           }
-          server.emit("playerStateUpdate", "foo");
+          server.emit("playerStateUpdate", JSON.stringify({ x: unit.x, y: unit.y }));
         });
 
       return unit;

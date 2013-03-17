@@ -30,7 +30,7 @@ app.configure(function () {
   app.use(express.static(tmpDir));
 });
 
-var world = new World("");
+var world = new World({});
 
 server.listen(3000);
 
@@ -39,14 +39,11 @@ io.sockets.on('connection', function(client) {
 
   client.on('join', function(name) {
     console.log("Name of client:", name);
-    client.set('nickname', name);
+    this.name = name;
   });
 
   client.on('playerStateUpdate', function(playerState){
-    var newState = world.updateFromPlayerState(client.nickname, playerState);
-
-    //TODO: Send to all at once
-    client.emit("newState", newState);
+    var newState = world.updateFromPlayerState(this.name, JSON.parse(playerState));
     client.broadcast.emit("newState", newState);
   });
 
