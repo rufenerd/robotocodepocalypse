@@ -3,8 +3,7 @@ var World = function(initialState) {
 }
 
 World.prototype.updateFromPlayerState = function(player, playerState) {
-  this.state += playerState;
-  console.log("new state: ", this.state);
+  this.state = playerState;
   return this.state;
 };
 
