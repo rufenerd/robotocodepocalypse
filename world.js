@@ -13,6 +13,12 @@ World.prototype.updateFromPlayerState = function(player, playerState) {
     this.state[player][attrname] = playerState[attrname];
   }
 
+  console.log("state on server: ", this.state);
+
+  return this.state;
+};
+
+World.prototype.currentState = function(){
   return this.state;
 };
 
