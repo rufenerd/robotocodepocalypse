@@ -9,7 +9,7 @@ define(function(require) {
 
     initialize: function() {
       var self = this;
-      this.server = io.connect('http://localhost:3000');
+      this.server = io.connect();
       var server = this.server;
       this.objects = {};
 
