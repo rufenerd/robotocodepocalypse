@@ -1,21 +1,23 @@
 requirejs.config({
   baseUrl: '/js',
   paths: {
-    'jquery'    : 'libs/jquery/jquery',
-    'underscore': 'libs/underscore/underscore',
-    'backbone'  : 'libs/backbone/backbone',
-    'knockout'  : 'libs/knockout/knockout',
-    'crafty'    : 'libs/crafty/crafty',
-    'bootstrap' : 'libs/bootstrap/bootstrap',
-    'text'      : 'libs/require/text'
+    'jquery'        : 'libs/jquery/jquery',
+    'underscore'    : 'libs/underscore/underscore',
+    'backbone'      : 'libs/backbone/backbone',
+    'knockout'      : 'libs/knockout/knockout',
+    'custombindings': 'libs/knockout/custombindings',
+    'crafty'        : 'libs/crafty/crafty',
+    'bootstrap'     : 'libs/bootstrap/bootstrap',
+    'text'          : 'libs/require/text'
   },
   shim: {
-    'jquery'    : { exports: '$' },
-    'underscore': { exports: '_' },
-    'backbone'  : { deps: ['underscore', 'jquery'], exports: 'Backbone' },
-    'knockout'  : { exports: 'ko' },
-    'crafty'    : { exports: 'Crafty' },
-    'bootstrap' : { deps: ['jquery'] }
+    'jquery'        : { exports: '$' },
+    'underscore'    : { exports: '_' },
+    'backbone'      : { deps: ['underscore', 'jquery'], exports: 'Backbone' },
+    'knockout'      : { exports: 'ko' },
+    'custombindings': { deps: ['knockout'] },
+    'crafty'        : { exports: 'Crafty' },
+    'bootstrap'     : { deps: ['jquery'] }
   },
   packages: ['game', 'game/components']
 });

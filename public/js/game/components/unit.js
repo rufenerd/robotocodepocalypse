@@ -16,7 +16,7 @@ define(function(require) {
   });
 
   Crafty.c("Unit", {
-    init: function() { self = this; console.log(self); },
+    init: function() { self = this; },
     move: function(direction, distance) {
       var distanceToTravel = _.isUndefined(distance) ? 1 : parseInt(distance, 10);
       
