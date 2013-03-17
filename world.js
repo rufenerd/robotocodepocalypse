@@ -3,8 +3,16 @@ var World = function(initialState) {
 }
 
 World.prototype.updateFromPlayerState = function(player, playerState) {
-  this.state += playerState;
-  console.log("new state: ", this.state);
+  // TODO use _ isUndefined and extend
+
+  if (this.state[player] === (void 0)) {
+    this.state[player] = {};
+  }
+
+  for (var attrname in playerState) {
+    this.state[player][attrname] = playerState[attrname];
+  }
+
   return this.state;
 };
 
