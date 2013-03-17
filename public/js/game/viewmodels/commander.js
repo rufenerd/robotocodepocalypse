@@ -1,28 +1,29 @@
 define(function(require){
+  var ViewModel = require('./_base');
   var ko = require('knockout');
-  var Backbone = require('backbone');
 
-  var self;
-  var CommanderViewModel = Backbone.View.extend({
-    initialize: function(){
-      self = this;
-      ko.applyBindings(self, self.el);
-    },
-    // onKeyDown: function(view, keyboardEvent){
-    //   console.log("onKD", keyboardEvent.keyIdentifier);
-    //   if (keyboardEvent.keyIdentifier === "Enter") {
-    //     self.execute();
-    //   }
-    //   return true;
-    // },
+  var self = ViewModel.extend({
+    el: document.getElementById('commander'),
     command: ko.observable('m s 5'),
+    inputHasFocus: ko.observable(true),
+
+    onKeyDown: function(view, keyboardEvent){
+      if (keyboardEvent.keyCode === 13) {
+        keyboardEvent.preventDefault();
+        self.inputHasFocus(false);
+        self.execute();
+        return false;
+      }
+      return true;
+    },
+
     execute: function(){
       self.trigger('executecommand', self.command());
       self.command('');
-      self.afterExecute(true);
-    },
-    afterExecute: ko.observable(true)
+      self.inputHasFocus(true);
+    }
+
   });
 
-  return CommanderViewModel;
+  return self;
 });

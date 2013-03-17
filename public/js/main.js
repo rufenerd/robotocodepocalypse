@@ -5,7 +5,6 @@ requirejs.config({
     'underscore'    : 'libs/underscore/underscore',
     'backbone'      : 'libs/backbone/backbone',
     'knockout'      : 'libs/knockout/knockout',
-    'custombindings': 'libs/knockout/custombindings',
     'crafty'        : 'libs/crafty/crafty',
     'bootstrap'     : 'libs/bootstrap/bootstrap',
     'text'          : 'libs/require/text'
@@ -15,7 +14,6 @@ requirejs.config({
     'underscore'    : { exports: '_' },
     'backbone'      : { deps: ['underscore', 'jquery'], exports: 'Backbone' },
     'knockout'      : { exports: 'ko' },
-    'custombindings': { deps: ['knockout'] },
     'crafty'        : { exports: 'Crafty' },
     'bootstrap'     : { deps: ['jquery'] }
   },
@@ -29,6 +27,8 @@ requirejs([
 ], function(Game, UnitFactory, CommanderViewModel) {
   Game.initialize();
   var unit = UnitFactory.create(Game);
-  var commander = new CommanderViewModel({ el: '#commander' });
+
+  var commander = CommanderViewModel.initialize();
+
   commander.on('executecommand', unit.execute);
 });
