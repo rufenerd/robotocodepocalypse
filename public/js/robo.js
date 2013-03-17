@@ -16,30 +16,17 @@
   };
 
   //Unit
-  var unit = Crafty.e("2D, Canvas, Color, Multiway, Delay, Collision")
-    .attr({ x: 300, y: 150, w: 10, h: 10})
-    .color('rgb(0,0,255)')
-    .multiway(1, {})
-    .disableControl()
-    .bind('Moved', function(from) {
-      if(this.hit('solid')){
-        this.attr({x: from.x, y:from.y});
-      }
-    });
-
-  unit.execute = function(cmd){
-    cmd = cmd.split(" ");
-
-    if (cmd[0] == "move" || cmd[0] == "m") {
-      var distanceToTravel = _.isUndefined(cmd[2]) ? 1 : parseInt(cmd[2], 10);
-
+  Crafty.c("Unit", {
+    move: function(direction, distance) {
+      var distanceToTravel = _.isUndefined(distance) ? 1 : parseInt(distance, 10);
+      
       if (distanceToTravel === 0) {
         return;
       } else {
         var oldX = this.x;
         var oldY = this.y;
 
-        switch (cmd[1]) {
+        switch (direction) {
         case "north":
         case "n":
           this.y -= TILE_SIZE;
@@ -63,13 +50,34 @@
         distanceToTravel -= 1;
 
         if (distanceToTravel) {
+          var self = this;
           this.delay(function(){
-            this.execute([cmd[0], cmd[1], distanceToTravel].join(" "));
+            self.move(direction, distanceToTravel);
           }, TURN_TIME);
         }
       }
+    },
+
+    execute: function(cmd){
+      cmd = cmd.split(" ");
+      var action = cmd.shift();
+
+      if (action == "move" || action == "m") {
+        this.move.apply(this, cmd);
+      }
     }
-  };
+  })
+
+  var unit = Crafty.e("2D, Canvas, Color, Multiway, Delay, Collision, Unit")
+    .attr({ x: 300, y: 150, w: 10, h: 10})
+    .color('rgb(0,0,255)')
+    .multiway(1, {})
+    .disableControl()
+    .bind('Moved', function(from) {
+      if(this.hit('solid')){
+        this.attr({x: from.x, y:from.y});
+      }
+    });
 
   //Commander
   var commanderViewModel = {
