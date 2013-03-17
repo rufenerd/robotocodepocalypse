@@ -11,16 +11,11 @@
     </style>
     
     <div id="commander" class="input-append">
-      <input class="span2" id="command_input" type="text" data-bind="value: command">
-      <button class="btn" id="command_button" type="button" data-bind="click: execute">Command!</button>
+      <input class="span2" type="text" data-bind="value: command">
+      <button class="btn" type="button" data-bind="click: execute">Command!</button>
       <label>(e.g. "move north 5" or "m n 5")</label>
     </div>
-
-    <script src="/js/libs/jquery/jquery.js"></script>
-    <script src="/js/libs/knockout/knockout.js"></script>
-    <script src="/js/libs/underscore/underscore.js"></script>
-    <script src="/js/libs/bootstrap/bootstrap.js"></script>
-    <script src="/js/libs/crafty/crafty.js"></script>
-    <script src="/js/robo.js"></script>
+    
+    <script data-main="js/main" src="/js/libs/require/require.js"></script>
   </body>
 </html>
