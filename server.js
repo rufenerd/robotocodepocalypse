@@ -40,6 +40,7 @@ io.sockets.on('connection', function(client) {
   client.on('join', function(name) {
     console.log("Name of client:", name);
     this.name = name;
+    client.emit("newState", world.currentState());
   });
 
   client.on('playerStateUpdate', function(playerState){

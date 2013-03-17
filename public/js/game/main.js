@@ -16,6 +16,7 @@ define(function(require) {
       server.on('connect', function(data) {
         self.name = prompt("What is your nickname?");
         server.emit('join', self.name);
+        Crafty.trigger('joined');
       });
 
       server.on('newState', function (newState) {

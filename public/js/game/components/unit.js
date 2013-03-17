@@ -5,6 +5,16 @@ define(function(require) {
   var TILE_SIZE = 5;
   var TURN_TIME = 1;
   var self;
+
+  Crafty.c("RandomStartPosition", {
+	  init: function() {
+		  this.attr({
+        x: 100,//Math.round(Crafty.math.randomInt(0, game.CANVAS_WIDTH) / 10) * 10,
+        y: 200//Math.round(Crafty.math.randomInt(0, game.CANVAS_HEIGHT) / 10) * 10
+      });
+	  }
+  });
+
   Crafty.c("Unit", {
     init: function() { self = this; console.log(self); },
     move: function(direction, distance) {
@@ -54,8 +64,10 @@ define(function(require) {
       if (action == "move" || action == "m") {
         self.move.apply(self, cmd);
       }
+    },
+
+    sendStateToServer: function(){
+      self.server.emit("playerStateUpdate", JSON.stringify({ x: self.x, y: self.y }));
     }
   });
-
-
 });
