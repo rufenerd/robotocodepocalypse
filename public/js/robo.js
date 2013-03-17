@@ -7,6 +7,17 @@
   Crafty.init(CANVAS_WIDTH, CANVAS_HEIGHT);
   Crafty.background('rgb(127,127,127)');
 
+  var server = io.connect('http://localhost:3000');
+
+  server.on('connect', function(data) {
+    nickname = prompt("What is your nickname?");
+    server.emit('join', nickname);
+  });
+
+  server.on('newState', function (newState) {
+    console.log(newState);
+  });
+
   // Walls
   var walls = {
     top: Crafty.e("2D, solid").attr({ x: 0, y: -1, w: CANVAS_WIDTH, h: 1 }),
@@ -77,6 +88,8 @@
       if(this.hit('solid')){
         this.attr({x: from.x, y:from.y});
       }
+
+      server.emit("playerStateUpdate", "foo");
     });
 
   //Commander

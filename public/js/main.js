@@ -22,7 +22,7 @@ requirejs.config({
 
 requirejs(['game', 'game/entities/unit', 'game/viewmodels/commander'], function(Game, UnitFactory, CommanderViewModel) {
   Game.initialize();
-  var unit = UnitFactory.create( Game.TILE_SIZE, Game.TURN_TIME );
+  var unit = UnitFactory.create(Game);
   var commander = new CommanderViewModel({ el: '#commander' });
   commander.on('executecommand', unit.execute);
 });
