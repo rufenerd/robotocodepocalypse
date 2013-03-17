@@ -17,10 +17,14 @@ requirejs.config({
     'crafty'    : { exports: 'Crafty' },
     'bootstrap' : { deps: ['jquery'] }
   },
-  packages: ["game"]
+  packages: ['game', 'game/components']
 });
 
-requirejs(['game', 'game/entities/unit', 'game/viewmodels/commander'], function(Game, UnitFactory, CommanderViewModel) {
+requirejs([
+  'game',
+  'game/entities/unit',
+  'game/viewmodels/commander'
+], function(Game, UnitFactory, CommanderViewModel) {
   Game.initialize();
   var unit = UnitFactory.create(Game);
   var commander = new CommanderViewModel({ el: '#commander' });

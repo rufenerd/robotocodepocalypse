@@ -1,12 +1,11 @@
 define(function(require) {
   var _ = require('underscore');
   var Crafty = require('crafty');
+  require('./components');
 
   var app = {
     CANVAS_WIDTH : 900,
     CANVAS_HEIGHT: 600,
-    TILE_SIZE    : 5,
-    TURN_TIME    : 1,
 
     initialize: function() {
       var self = this;
@@ -35,7 +34,6 @@ define(function(require) {
       
       Crafty.init(self.CANVAS_WIDTH, self.CANVAS_HEIGHT);
       Crafty.background('rgb(127,127,127)');
-
 
       // Walls
       Crafty.e("2D, solid").attr({ x: 0, y: -1, w: this.CANVAS_WIDTH, h: 1 });
