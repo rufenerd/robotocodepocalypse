@@ -1,6 +1,7 @@
 define(function(require){
   var ViewModel = require('./_base');
   var ko = require('knockout');
+  var _ = require('underscore');
 
   var self = ViewModel.extend({
     el: document.getElementById('commander'),
@@ -61,7 +62,7 @@ define(function(require){
       var cmd = self.command();
 
       if(cmd) {
-        if (_.isEmpty(self.history) || cmd != _.last(self.history) ) {
+        if (cmd != _.last(self.history)) {
           self.history.push(cmd);
         }
         self.historyIndex = self.history.length;
