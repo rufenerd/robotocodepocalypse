@@ -3,6 +3,7 @@ var less = require('less-middleware');
 var path = require('path');
 var os = require('os');
 var socket = require('socket.io');
+var _ = require('./public/js/libs/underscore/underscore');
 
 var World = require('./world').World;
 
@@ -38,8 +39,10 @@ io.sockets.on('connection', function(client) {
   console.log('Client connected...');
 
   client.on('join', function(name) {
-    console.log("Name of client:", name);
-    this.name = name;
+    this.name = world.uniqueName(name);
+    world.addPlayer(this.name);
+
+    console.log(this.name, "joined the game!");
     client.emit("newState", world.currentState());
   });
 

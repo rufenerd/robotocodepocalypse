@@ -7,7 +7,7 @@ define(function(require) {
       var server = game.server;
 
       var unit = Crafty.e("2D, Canvas, Color, Multiway, Delay, Collision, Unit, RandomStartPosition")
-        .attr({ w: 10, h: 10, server: server })
+        .attr({ w: TILE_SIZE, h: TILE_SIZE, server: server })
         .color('rgb(0,0,255)')
         .multiway(1, {})
         .disableControl()

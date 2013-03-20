@@ -24,7 +24,7 @@ define(function(require) {
             if (_.isUndefined(self.objects[id])) {
               self.objects[id] = Crafty.e("2D, Canvas, Color, solid")
                 .color(self.nextColor())
-                .attr({ w: 10, h: 10 });
+                .attr({ w: config.TILE_SIZE, h: config.TILE_SIZE });
 
               self.numOpponents += 1;
             }
