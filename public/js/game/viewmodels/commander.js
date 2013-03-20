@@ -23,13 +23,18 @@ define(function(require){
       var result = false;
       if (self.history.length) {
         self.historyIndex++;
-        self.historyIndex = self.historyIndex > self.history.length - 1  ? self.history.length - 1 : self.historyIndex;
-        result = self.history[self.historyIndex];
+        self.historyIndex = self.historyIndex > self.history.length  ? self.history.length : self.historyIndex;
+        if (self.historyIndex < self.history.length){
+          result = self.history[self.historyIndex];
+        } else {
+          result = '';
+        }
       }
       return result;
     },
 
     onKeyDown: function(view, keyboardEvent) {
+      var cmd;
       switch (keyboardEvent.keyCode) {
         case 13: // enter key
           keyboardEvent.preventDefault();
@@ -39,14 +44,14 @@ define(function(require){
 
         case 38: // up arrow
           keyboardEvent.preventDefault();
-          var cmd = self.previousHistory();
+          cmd = self.previousHistory();
           if( cmd ) { self.command(cmd); }
           return false;
 
         case 40: // down arrow
           keyboardEvent.preventDefault();
-          var cmd = self.nextHistory();
-          if( cmd ) { self.command(cmd); }
+          cmd = self.nextHistory();
+          if( typeof(cmd) === 'string' ) { self.command(cmd); }
           return false;
       }
       return true;
@@ -54,10 +59,15 @@ define(function(require){
 
     execute: function() {
       var cmd = self.command();
-      if(cmd && (!self.history.length || self.history.length && cmd != self.history[self.history.length - 1])){
-        self.history.push(cmd);
-        self.trigger('executecommand', cmd);
+      var numberOfHistoryItems = self.history.length;
+      var indexOfLastHistoryItem = numberOfHistoryItems - 1;
+
+      if(cmd) {
+        if ( (numberOfHistoryItems === 0) || ((numberOfHistoryItems > 0) && (cmd != self.history[indexOfLastHistoryItem])) ) {
+          self.history.push(cmd);
+        }
       }
+      self.trigger('executecommand', cmd);
       self.historyIndex = self.history.length;
       self.command('');
       self.inputHasFocus(true);
