@@ -12,6 +12,7 @@ define(function(require) {
       this.server = io.connect();
       var server = this.server;
       this.objects = {};
+      this.numOpponents = 0;
 
       server.on('connect', function(data) {
         self.name = prompt("What is your nickname?");
@@ -24,8 +25,10 @@ define(function(require) {
           if (id !== self.name) {
             if (_.isUndefined(self.objects[id])) {
               self.objects[id] = Crafty.e("2D, Canvas, Color, solid")
-                .color('rgb(255,0,255)')
-                .attr({ w: 10, h: 10 })
+                .color(self.nextColor())
+                .attr({ w: 10, h: 10 });
+
+              self.numOpponents += 1;
             }
             
             self.objects[id].attr(info);
@@ -41,6 +44,17 @@ define(function(require) {
       Crafty.e("2D, solid").attr({ x: this.CANVAS_WIDTH, y: 0, w: 1, h: this.CANVAS_HEIGHT });
       Crafty.e("2D, solid").attr({ x: 0, y: this.CANVAS_HEIGHT, w: this.CANVAS_WIDTH, h: 1 });
       Crafty.e("2D, solid").attr({ x: -1, y: 0, w: 1, h: this.CANVAS_HEIGHT });
+    },
+ 
+    nextColor: function() {
+      var colors = [
+        'rgb(255,0,0)',
+        'rgb(0,255,0)',
+        'rgb(255,255,0)',
+        'rgb(0,255,255)'
+      ];
+
+      return colors[this.numOpponents % colors.length];
     }
   };
 
