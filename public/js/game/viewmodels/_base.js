@@ -7,8 +7,11 @@ define(function(require){
     initialize: function(el) {
       el = el || self.el;
       ko.applyBindings(self, el);
+      self.init();
       return self;
     },
+
+    init: function(){},
 
     extend: function(obj) { 
       return _.extend(self, obj); 

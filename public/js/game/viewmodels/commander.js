@@ -4,21 +4,71 @@ define(function(require){
 
   var self = ViewModel.extend({
     el: document.getElementById('commander'),
-    command: ko.observable('m s 5'),
+    history: [],
+    historyIndex: 0,
+    command: ko.observable(''),
     inputHasFocus: ko.observable(true),
 
-    onKeyDown: function(view, keyboardEvent){
-      if (keyboardEvent.keyCode === 13) {
-        keyboardEvent.preventDefault();
-        self.inputHasFocus(false);
-        self.execute();
-        return false;
+    previousHistory: function() {
+      var result = false;
+      if (self.history.length) {
+        self.historyIndex--;
+        self.historyIndex = self.historyIndex < 0 ? 0 : self.historyIndex;
+        result = self.history[self.historyIndex];
+      }
+      return result;
+    },
+
+    nextHistory: function() {
+      var result = false;
+      if (self.history.length) {
+        self.historyIndex++;
+        self.historyIndex = self.historyIndex > self.history.length  ? self.history.length : self.historyIndex;
+        if (self.historyIndex < self.history.length){
+          result = self.history[self.historyIndex];
+        } else {
+          result = '';
+        }
+      }
+      return result;
+    },
+
+    onKeyDown: function(view, keyboardEvent) {
+      var cmd;
+      switch (keyboardEvent.keyCode) {
+        case 13: // enter key
+          keyboardEvent.preventDefault();
+          self.inputHasFocus(false);
+          self.execute();
+          return false;
+
+        case 38: // up arrow
+          keyboardEvent.preventDefault();
+          cmd = self.previousHistory();
+          if( cmd ) { self.command(cmd); }
+          return false;
+
+        case 40: // down arrow
+          keyboardEvent.preventDefault();
+          cmd = self.nextHistory();
+          if( typeof(cmd) === 'string' ) { self.command(cmd); }
+          return false;
       }
       return true;
     },
 
-    execute: function(){
-      self.trigger('executecommand', self.command());
+    execute: function() {
+      var cmd = self.command();
+      var numberOfHistoryItems = self.history.length;
+      var indexOfLastHistoryItem = numberOfHistoryItems - 1;
+
+      if(cmd) {
+        if ( (numberOfHistoryItems === 0) || ((numberOfHistoryItems > 0) && (cmd != self.history[indexOfLastHistoryItem])) ) {
+          self.history.push(cmd);
+        }
+      }
+      self.trigger('executecommand', cmd);
+      self.historyIndex = self.history.length;
       self.command('');
       self.inputHasFocus(true);
     }
