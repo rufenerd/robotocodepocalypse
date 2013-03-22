@@ -1,6 +1,7 @@
 define(function(require){
   var ViewModel = require('./_base');
   var ko = require('knockout');
+  var _ = require('underscore');
 
   var self = ViewModel.extend({
     el: document.getElementById('commander'),
@@ -59,16 +60,14 @@ define(function(require){
 
     execute: function() {
       var cmd = self.command();
-      var numberOfHistoryItems = self.history.length;
-      var indexOfLastHistoryItem = numberOfHistoryItems - 1;
 
       if(cmd) {
-        if ( (numberOfHistoryItems === 0) || ((numberOfHistoryItems > 0) && (cmd != self.history[indexOfLastHistoryItem])) ) {
+        if (cmd != _.last(self.history)) {
           self.history.push(cmd);
         }
+        self.historyIndex = self.history.length;
+        self.trigger('executecommand', cmd);
       }
-      self.trigger('executecommand', cmd);
-      self.historyIndex = self.history.length;
       self.command('');
       self.inputHasFocus(true);
     }

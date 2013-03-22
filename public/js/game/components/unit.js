@@ -9,8 +9,8 @@ define(function(require) {
   Crafty.c("RandomStartPosition", {
 	  init: function() {
 		  this.attr({
-        x: 100,//Math.round(Crafty.math.randomInt(0, game.CANVAS_WIDTH) / 10) * 10,
-        y: 200//Math.round(Crafty.math.randomInt(0, game.CANVAS_HEIGHT) / 10) * 10
+        x: Math.round(Crafty.math.randomInt(0, Crafty.canvas.context.canvas.width) / TILE_SIZE) * TILE_SIZE,
+        y: Math.round(Crafty.math.randomInt(0, Crafty.canvas.context.canvas.height) / TILE_SIZE) * TILE_SIZE
       });
 	  }
   });
