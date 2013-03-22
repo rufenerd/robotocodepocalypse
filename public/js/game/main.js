@@ -1,7 +1,7 @@
 define(function(require) {
   var _ = require('underscore');
   var Crafty = require('crafty');
-  require('./components');
+  require('game/components');
 
   var app = {
     CANVAS_WIDTH : 900,
