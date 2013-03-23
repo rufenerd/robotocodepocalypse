@@ -5,13 +5,15 @@ define(function(require){
 
   var self = _.extend(Backbone.Events, { 
     initialize: function(el) {
+      self.beforeInit();
       el = el || self.el;
       ko.applyBindings(self, el);
-      self.init();
+      self.afterInit();
       return self;
     },
 
-    init: function(){},
+    beforeInit: function(){},
+    afterInit: function(){},
 
     extend: function(obj) { 
       return _.extend(self, obj); 
