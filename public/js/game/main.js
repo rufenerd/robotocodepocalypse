@@ -19,6 +19,12 @@ define(function(require) {
       });
 
       server.on('newState', function (newState) {
+        // remove destroyed objects
+        _.each(_.difference(_.keys(self.objects), _.keys(newState)), function(id) {
+          self.objects[id].destroy();
+          delete self.objects[id];
+        });
+
         _.each(newState, function(info, id){
           if (id !== self.name) {
             if (_.isUndefined(self.objects[id])) {

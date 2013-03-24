@@ -48,6 +48,11 @@ io.sockets.on('connection', function(client) {
     client.broadcast.emit("newState", newState);
   });
 
+  client.on('disconnect', function(){
+    var stateWithoutClient = world.removeObject(this.name);
+    client.broadcast.emit("newState", stateWithoutClient);
+  });
+
 });
 
 console.log('Server listening on port 3000.');
