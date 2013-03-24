@@ -18,7 +18,11 @@ define(function(require) {
         Crafty.trigger('joined');
       });
 
-      server.on('newState', function (newState) {
+      server.on('newName', function(name){
+        self.name = name;
+      });
+
+      server.on('newState', function(newState) {
         _.each(newState, function(info, id){
           if (id !== self.name) {
             if (_.isUndefined(self.objects[id])) {

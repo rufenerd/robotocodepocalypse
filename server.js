@@ -43,6 +43,11 @@ io.sockets.on('connection', function(client) {
     world.addPlayer(this.name);
 
     console.log(this.name, "joined the game!");
+
+    if (this.name !== name) {
+      client.emit("newName", this.name);
+    }
+
     client.emit("newState", world.currentState());
   });
 
