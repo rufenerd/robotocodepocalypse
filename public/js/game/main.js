@@ -1,12 +1,10 @@
 define(function(require) {
   var _ = require('underscore');
   var Crafty = require('crafty');
+  var config = require('game/config');
   require('game/components');
 
   var app = {
-    CANVAS_WIDTH : 900,
-    CANVAS_HEIGHT: 600,
-
     initialize: function() {
       var self = this;
       this.server = io.connect();
@@ -30,20 +28,20 @@ define(function(require) {
 
               self.numOpponents += 1;
             }
-            
+
             self.objects[id].attr(info);
           }
         });
       });
-      
-      Crafty.init(self.CANVAS_WIDTH, self.CANVAS_HEIGHT);
+
+      Crafty.init(config.CANVAS_WIDTH, config.CANVAS_HEIGHT);
       Crafty.background('rgb(127,127,127)');
 
       // Walls
-      Crafty.e("2D, solid").attr({ x: 0, y: -1, w: this.CANVAS_WIDTH, h: 1 });
-      Crafty.e("2D, solid").attr({ x: this.CANVAS_WIDTH, y: 0, w: 1, h: this.CANVAS_HEIGHT });
-      Crafty.e("2D, solid").attr({ x: 0, y: this.CANVAS_HEIGHT, w: this.CANVAS_WIDTH, h: 1 });
-      Crafty.e("2D, solid").attr({ x: -1, y: 0, w: 1, h: this.CANVAS_HEIGHT });
+      Crafty.e("2D, solid").attr({ x: 0, y: -1, w: config.CANVAS_WIDTH, h: 1 });
+      Crafty.e("2D, solid").attr({ x: config.CANVAS_WIDTH, y: 0, w: 1, h: config.CANVAS_HEIGHT });
+      Crafty.e("2D, solid").attr({ x: 0, y: config.CANVAS_HEIGHT, w: config.CANVAS_WIDTH, h: 1 });
+      Crafty.e("2D, solid").attr({ x: -1, y: 0, w: 1, h: config.CANVAS_HEIGHT });
     },
  
     nextColor: function() {

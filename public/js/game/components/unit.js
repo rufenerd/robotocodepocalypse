@@ -1,25 +1,27 @@
 define(function(require) {
   var _ = require('underscore');
   var Crafty = require('crafty');
+  var config = require('game/config');
 
-  var TILE_SIZE = 5;
-  var TURN_TIME = 1;
+  var TILE_SIZE = config.TILE_SIZE;
+  var TURN_TIME = config.TURN_TIME;
+
   var self;
 
   Crafty.c("RandomStartPosition", {
-	  init: function() {
-		  this.attr({
+    init: function() {
+      this.attr({
         x: Math.round(Crafty.math.randomInt(0, Crafty.canvas.context.canvas.width) / TILE_SIZE) * TILE_SIZE,
         y: Math.round(Crafty.math.randomInt(0, Crafty.canvas.context.canvas.height) / TILE_SIZE) * TILE_SIZE
       });
-	  }
+    }
   });
 
   Crafty.c("Unit", {
     init: function() { self = this; },
     move: function(direction, distance) {
       var distanceToTravel = _.isUndefined(distance) ? 1 : parseInt(distance, 10);
-      
+
       if (distanceToTravel === 0) {
         return;
       } else {
